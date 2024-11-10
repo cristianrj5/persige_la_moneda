@@ -4,8 +4,9 @@ extends Area2D
 var movimiento := Vector2()
 var ventanaTm = Vector2(430, 720)
 
-signal recolectar
-signal herir
+signal recolectar;
+signal herir;
+signal poder;
 
 @onready var sprite : AnimatedSprite2D= $AnimatedSprite2D; ##se debe hacer el llamado de el animatedsptrite y ponerle su mismo tipo
 
@@ -40,7 +41,14 @@ func morir():
 func _on_area_jugador(area: Area2D) -> void:
 	if area.is_in_group("monedas"):
 		area.recoger();
-		emit_signal("recolectar");
+		emit_signal("recolectar", "moneda");
 	if area.is_in_group("enemigos"):
 		emit_signal("herir");
 		morir();
+
+		
+		
+	
+
+
+	

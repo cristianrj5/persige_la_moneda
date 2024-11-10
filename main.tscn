@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://cmp0efpagjxa4"]
+[gd_scene load_steps=9 format=3 uid="uid://cmp0efpagjxa4"]
 
 [ext_resource type="PackedScene" uid="uid://csvno535pw7ye" path="res://jugador.tscn" id="1_yb3yk"]
 [ext_resource type="Script" path="res://main.gd" id="1_yn8on"]
 [ext_resource type="PackedScene" uid="uid://dcjbpahkdklla" path="res://moneda.tscn" id="2_syfa0"]
 [ext_resource type="Texture2D" uid="uid://g10jtuwbmvm" path="res://assets/grass.png" id="2_up6sn"]
+[ext_resource type="PackedScene" uid="uid://chk7a2cvirfou" path="res://hud.tscn" id="5_y421t"]
+[ext_resource type="AudioStream" uid="uid://pnjnc6fkxkd" path="res://assets/audio/Coin.wav" id="6_1r3mo"]
+[ext_resource type="AudioStream" uid="uid://b08jvurlcpy83" path="res://assets/audio/Level.wav" id="7_8wpsi"]
+[ext_resource type="AudioStream" uid="uid://bwguaoturq8uj" path="res://assets/audio/Hit.wav" id="8_uhn6s"]
 
 [node name="main" type="Node"]
 script = ExtResource("1_yn8on")
@@ -20,12 +24,29 @@ stretch_mode = 1
 
 [node name="jugador" parent="." instance=ExtResource("1_yb3yk")]
 
-[node name="moneda" parent="." instance=ExtResource("2_syfa0")]
-position = Vector2(241, 300)
-scale = Vector2(0.5, 0.5)
-
 [node name="contenedorMonedas" type="Node" parent="."]
 
-[node name="Marker2D" type="Marker2D" parent="contenedorMonedas"]
+[node name="moneda" parent="contenedorMonedas" instance=ExtResource("2_syfa0")]
+position = Vector2(241, 300)
+
+[node name="Marker2D" type="Marker2D" parent="."]
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="hud" parent="." instance=ExtResource("5_y421t")]
+
+[node name="MonedaSonido" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_1r3mo")
+
+[node name="audioInicio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_8wpsi")
+
+[node name="audioMorir" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_uhn6s")
+
+[node name="spownPwer" type="Timer" parent="."]
+
+[connection signal="recolectar" from="jugador" to="." method="_on_jugador_recolectar"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="inicio_juego" from="hud" to="." method="nuevoJuego"]
+[connection signal="timeout" from="spownPwer" to="." method="_on_spown_pwer_timeout"]

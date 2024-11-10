@@ -87,3 +87,4 @@ autoplay = "zorrito"
 frame_progress = 0.119224
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="herir" from="." to="." method="_on_herir"]
